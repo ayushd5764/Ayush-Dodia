@@ -1,0 +1,184 @@
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Emotion Mirroring</title>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Josefin Sans' rel='stylesheet'>
+<link href="{{ url_for('static', filename='css/df_style.css') }}" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<style>
+	.bg-dark3 {
+
+		background-color:#323746; 	
+	}
+	#result {
+		color: #0a1c4ed1;
+	}
+	.img-preview {
+    width: 256px;
+    height: 256px;
+    position: relative;
+    border: 5px solid #F8F8F8;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+    margin-top: 1em;
+    margin-bottom: 1em;    
+}
+
+.img-preview>div {
+    width: 100%;
+    height: 100%;
+    background-size: 256px 256px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.upload-label{
+    display: inline-block;
+    padding: 12px 30px;
+    background: #323746;
+    color: #fff;
+    font-size: 1em;
+    transition: all .4s;
+    cursor: pointer;
+	font-weight:bold;
+}
+
+.upload-label:hover{
+    background: #5c5c8d;
+    color: #fff;
+	font-weight:bold;
+}
+
+.loader {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #323746; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+#mystyle{
+font-size:18px;
+margin-left: auto;
+margin-right: auto;
+width:80%;
+height:40%;
+text-align:center;
+border: 1px solid black;
+}
+
+	
+	
+	</style>
+</head>
+
+<body style="font-family:Montserrat;overflow:scroll;">
+    <nav class="navbar navbar-dark bg-dark3">
+        <div class="container" style="font-size:30px;color:white;font-family: 'Josefin Sans';margin-left:6%;">
+            Detect the Emotions of People in the Image
+        </div>
+    </nav>
+    <div class="container" style="margin-left:7%;">
+        <div id="content" style="margin-top:2em;">
+		<div class="container">
+		  <div class="row" >
+			<div class="col-sm-6 bd" >
+			  <h3><b>Emotion Mirroring</b></h3>
+			  <br>
+			  <p style="text-align:justify;">Getting to know what a person feels through their expressions is important to have customer relation maintained. For virtual analysis if customer emotions instead of human monitorining and analysis, an automated system would save effort and time. This application helps you do that. Browse the image, paste the URL of the image get the emotions.</p>
+				<img src="{{url_for('static',filename='emotion.jpg')}}" style="height:400px;width:550px"class="croping" alt="Emotion">       
+			</div>
+			<div class="col-sm-6" >
+				<div>
+					<h4>Drop in the image URL to know the emotions!</h4><br>
+			<form action = "http://localhost:5000/predict" id="upload-file" method="post" enctype="multipart/form-data">
+			<input type="text" name="output" placeholder="Specify the image URL" style="width:100%;border: 1px solid black; border-radius:4px;height:6%;">
+			<br><br>
+			<input type="submit" style="background: #323746;background-border:#323746;color:white;" value="Submit">
+				
+			</form>
+
+			<div class="loader" style="display:none;text-align:center;"></div>
+{{ table_html | safe }}
+			
+
+		</div>
+			</div>
+			 
+		  </div>
+		</div>
+		</div>
+    </div>
+</body>
+
+<footer>
+<!--script>
+$(document).ready(function () {
+    // Init
+    $('.image-section').hide();
+    $('.loader').hide();
+    $('#result').hide();
+    // Upload Preview
+    function readURL(input) {
+        if (input.text && input.text[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imagePreview').attr('src',  e.target.result + );
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#imageUpload").change(function () {
+        $('.image-section').show();
+        $('#btn-predict').show();
+        $('#result').text('');
+        $('#result').hide();
+        readURL(this);
+    });
+    // Predict
+    $('#btn-predict').click(function () {
+        var form_data = new FormData($('#upload-file')[0]);
+        // Show loading animation
+        $(this).hide();
+        $('.loader').show();
+        // Make prediction by calling api /predict
+        $.ajax({
+            type: 'POST',
+            url: '/predict',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            async: true,
+            success: function (data) {
+                // Get and display the result
+                $('.loader').hide();
+                $('#result').fadeIn(600);
+                $('#result').text('Prediction : '+data);
+                console.log('Success!');
+            },
+        });
+    });
+});
+</script-->
+</footer>
+
+</html>
